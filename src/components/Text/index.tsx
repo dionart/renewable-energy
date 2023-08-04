@@ -10,7 +10,7 @@ import styled from "styled-components/native";
 
 type Alignment = "center" | "left" | "right" | "inherit";
 type Modifier = "underline";
-type Weight = "regular" | "medium" | "semiBold" | "bold" | "inherit";
+export type Weight = "regular" | "medium" | "semiBold" | "bold" | "inherit";
 
 export const weightStyles: Record<Weight, TextStyle> = {
 	inherit: {},

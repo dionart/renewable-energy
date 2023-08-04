@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
-import Text from "../../components/Text";
-import Box from "../../components/Box";
-import Input from "../../components/Input";
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
 import Icon from "../../components/Icon";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
 import { NavigationProp } from "@react-navigation/native";
-import Header from "../../components/Header";
-import Button from "../../components/Button";
+import { AuthNavigatorParamList } from "../../navigators/AuthNavigator/types";
+import { Box, Button, Header, Input, Text } from "../../components";
 
 const SignUp: React.FC = () => {
 	const [firstName, setFirstName] = useState("");

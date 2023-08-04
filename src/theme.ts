@@ -5,6 +5,7 @@ export interface Theme extends DefaultTheme {
 		primary: string;
 		secondary: string;
 		green: string;
+		red: string;
 		black: string;
 		white: string;
 		grey100: string;
@@ -18,6 +19,7 @@ const theme: Theme = {
 		primary: "#770FDF",
 		secondary: "#F7EFFF",
 		green: "#0FDF8F",
+		red: "#EE8688",
 		black: "#000000",
 		white: "#FFFFFF",
 		grey100: "#F4F4F4",

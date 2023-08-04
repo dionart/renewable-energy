@@ -11,7 +11,10 @@ import {
 import { ThemeProvider } from "styled-components/native";
 import theme, { Theme } from "./src/theme";
 import AuthNavigator from "./src/navigators/AuthNavigator";
+import { Provider } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
+import store, { RootState } from "./src/store";
+import AppNavigator from "./src/navigators/AppNavigator";
 
 export default function App() {
 	const [fontsLoaded] = useFonts({
@@ -31,11 +34,13 @@ export default function App() {
 		return null;
 	}
 	return (
-		<ThemeProvider theme={theme as Theme}>
-			<NavigationContainer>
-				<AuthNavigator />
-			</NavigationContainer>
-		</ThemeProvider>
+		<Provider store={store}>
+			<ThemeProvider theme={theme as Theme}>
+				<NavigationContainer>
+					<AppNavigator />
+				</NavigationContainer>
+			</ThemeProvider>
+		</Provider>
 	);
 }
 

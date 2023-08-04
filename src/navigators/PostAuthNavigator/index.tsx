@@ -1,14 +1,14 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Login, SignUp } from "../../screens";
 import { SafeAreaView } from "react-native";
 import { Theme } from "../../theme";
 import { useTheme } from "styled-components";
-import { AuthNavigatorParamList } from "./types";
+import { PostAuthNavigatorParamList } from "./types";
+import Home from "../../screens/Home";
 
-const Stack = createNativeStackNavigator<AuthNavigatorParamList>();
+const Stack = createNativeStackNavigator<PostAuthNavigatorParamList>();
 
-const AuthNavigator: React.FC = () => {
+const PostAuthNavigator: React.FC = () => {
 	const theme = useTheme() as Theme;
 
 	return (
@@ -18,11 +18,10 @@ const AuthNavigator: React.FC = () => {
 					headerShown: false,
 				}}
 			>
-				<Stack.Screen name="Login" component={Login} />
-				<Stack.Screen name="SignUp" component={SignUp} />
+				<Stack.Screen name="Home" component={Home} />
 			</Stack.Navigator>
 		</SafeAreaView>
 	);
 };
 
-export default AuthNavigator;
+export default PostAuthNavigator;

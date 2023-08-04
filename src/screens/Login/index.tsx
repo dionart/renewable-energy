@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Text from "../../components/Text";
-import Box from "../../components/Box";
-import Input from "../../components/Input";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
-import Header from "../../components/Header";
-import Button from "../../components/Button";
+import { useAppDispatch } from "../../store";
+import { login, logout } from "../../store/authSlice";
+import { AuthNavigatorParamList } from "../../navigators/AuthNavigator/types";
+import { Button, Header, Input, Box, Text } from "../../components";
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState("");
@@ -14,8 +13,18 @@ const Login: React.FC = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
 	const theme = useTheme() as Theme;
+	const dispatch = useAppDispatch();
+
+	const handleLogin = () => {
+		dispatch(login({ id: 1, email: email }));
+	};
+
+	const handleLogout = () => {
+		dispatch(logout());
+	};
 
 	const handleNavigate = () => {
+		handleLogin();
 		navigation.navigate("SignUp");
 	};
 
