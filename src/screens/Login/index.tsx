@@ -1,29 +1,41 @@
 import React, { useState } from "react";
-import { Button, TextInput, TouchableOpacity, View } from "react-native";
 import Text from "../../components/Text";
 import Box from "../../components/Box";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Input from "../../components/Input";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useTheme } from "styled-components";
+import { Theme } from "../../theme";
+import Header from "../../components/Header";
+import Button from "../../components/Button";
 
-const Home: React.FC = () => {
+const Login: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
-	const navigation = useNavigation();
+	const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
+	const theme = useTheme() as Theme;
+
+	const handleNavigate = () => {
+		navigation.navigate("SignUp");
+	};
 
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+		<>
+			<Header />
 			<Box
-				marginTop={51}
 				borderTopWidth={1}
-				borderTopColor="#F4F4F4"
+				borderTopColor={theme.colors.grey100}
 				backgroundColor="white"
 				paddingHorizontal={20}
 				paddingTop={20}
 				flex={1}
 			>
-				<Text align="center" weight="semiBold" size={18} color="black">
+				<Text
+					align="center"
+					weight="semiBold"
+					size={18}
+					color={theme.colors.black}
+				>
 					Login
 				</Text>
 
@@ -48,31 +60,21 @@ const Home: React.FC = () => {
 				</Box>
 
 				<Box marginTop={37}>
-					<TouchableOpacity
-						onPress={() => navigation.navigate("SignUp")}
-						style={{
-							backgroundColor: "#770FDF",
-							paddingVertical: 16,
-							borderRadius: 4,
-						}}
-					>
-						<Text color="white" align="center">
-							Login
-						</Text>
-					</TouchableOpacity>
+					<Button onPress={handleNavigate} text="Login" />
 
 					<Text
 						marginTop={13}
 						weight="regular"
-						color="#A0A0A0"
+						color={theme.colors.grey700}
 						align="center"
 						size={12}
 					>
 						Don’t have an account? {""}
 						<Text
+							onPress={handleNavigate}
 							underline
 							weight="regular"
-							color="#A0A0A0"
+							color={theme.colors.grey700}
 							align="center"
 							size={12}
 						>
@@ -82,8 +84,8 @@ const Home: React.FC = () => {
 					</Text>
 				</Box>
 			</Box>
-		</SafeAreaView>
+		</>
 	);
 };
 
-export default Home;
+export default Login;

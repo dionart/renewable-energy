@@ -1,8 +1,6 @@
-import { StatusBar } from "expo-status-bar";
 import React, { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { Home, SignUp } from "./src/screens";
 import {
 	useFonts,
 	Sora_400Regular,
@@ -10,9 +8,10 @@ import {
 	Sora_600SemiBold,
 	Sora_700Bold,
 } from "@expo-google-fonts/sora";
-import { useCallback } from "react";
-
-const Stack = createNativeStackNavigator();
+import { ThemeProvider } from "styled-components/native";
+import theme, { Theme } from "./src/theme";
+import AuthNavigator from "./src/navigators/AuthNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
 	const [fontsLoaded] = useFonts({
@@ -32,16 +31,11 @@ export default function App() {
 		return null;
 	}
 	return (
-		<NavigationContainer>
-			<Stack.Navigator
-				screenOptions={{
-					headerShown: false,
-				}}
-			>
-				<Stack.Screen name="Home" component={Home} />
-				<Stack.Screen name="SignUp" component={SignUp} />
-			</Stack.Navigator>
-		</NavigationContainer>
+		<ThemeProvider theme={theme as Theme}>
+			<NavigationContainer>
+				<AuthNavigator />
+			</NavigationContainer>
+		</ThemeProvider>
 	);
 }
 

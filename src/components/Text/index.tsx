@@ -1,13 +1,12 @@
 import React, { useMemo } from "react";
-import { useFonts } from "expo-font";
 import {
 	Text as NativeText,
-	StyleSheet,
 	TextProps as NativeTextProps,
 	TextStyle,
 	Animated,
 	StyleProp,
 } from "react-native";
+import styled from "styled-components/native";
 
 type Alignment = "center" | "left" | "right" | "inherit";
 type Modifier = "underline";
@@ -48,7 +47,7 @@ const modifierStyles: Record<Modifier, TextStyle> = {
 	},
 };
 
-export type TypographyProps = {
+export type TextProps = {
 	size?: number;
 	weight?: Weight;
 	align?: Alignment;
@@ -70,7 +69,9 @@ export type TypographyProps = {
 } & Partial<Record<Modifier, boolean>> &
 	NativeTextProps;
 
-const Typography = ({
+const StyledText = styled(NativeText)``;
+
+const Text = ({
 	style,
 	size = 16,
 	weight = "inherit",
@@ -90,9 +91,9 @@ const Typography = ({
 	paddingLeft,
 	paddingRight,
 	...otherProps
-}: TypographyProps): JSX.Element => {
+}: TextProps): JSX.Element => {
 	const Component = useMemo(
-		() => (animated ? Animated.Text : NativeText),
+		() => (animated ? Animated.Text : StyledText), // Use the StyledText instead of NativeText
 		[animated]
 	);
 
@@ -118,4 +119,4 @@ const Typography = ({
 	return <Component style={[textStyle, style]} {...otherProps} />;
 };
 
-export default Typography;
+export default Text;

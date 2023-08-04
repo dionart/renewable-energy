@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Button, TextInput, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import Text from "../../components/Text";
 import Box from "../../components/Box";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Input from "../../components/Input";
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
 import Icon from "../../components/Icon";
+import { useTheme } from "styled-components";
+import { Theme } from "../../theme";
+import { NavigationProp } from "@react-navigation/native";
+import Header from "../../components/Header";
+import Button from "../../components/Button";
 
 const SignUp: React.FC = () => {
 	const [firstName, setFirstName] = useState("");
@@ -15,38 +19,48 @@ const SignUp: React.FC = () => {
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [checked, setChecked] = useState(false);
-	const navigation = useNavigation();
+	const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
+	const theme = useTheme() as Theme;
 
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-			<Box
-				justifyContent="space-between"
-				flexDirection="row"
-				paddingVertical={14}
-				paddingHorizontal={23}
-			>
-				<Icon icon="arrow-left" size={24} />
-				<Box
-					alignSelf="center"
-					alignItems="center"
-					gap={5}
-					flexDirection="row"
-				>
-					<Box backgroundColor="#F4F4F4" width={50} height={5} />
-					<Box backgroundColor="#F4F4F4" width={50} height={5} />
-					<Box backgroundColor="#F4F4F4" width={50} height={5} />
-				</Box>
-				<Box />
-			</Box>
+		<>
+			<Header
+				leftComponent={
+					<TouchableOpacity onPress={() => navigation.goBack()}>
+						<Icon icon="arrow-left" size={24} />
+					</TouchableOpacity>
+				}
+				centerComponent={
+					<Box
+						alignSelf="center"
+						alignItems="center"
+						gap={5}
+						flexDirection="row"
+					>
+						{Array.from({ length: 3 }).map((_) => (
+							<Box
+								backgroundColor={theme.colors.grey100}
+								width={50}
+								height={5}
+							/>
+						))}
+					</Box>
+				}
+			/>
 			<Box
 				borderTopWidth={1}
-				borderTopColor="#F4F4F4"
+				borderTopColor={theme.colors.grey100}
 				backgroundColor="white"
 				paddingHorizontal={20}
 				paddingTop={20}
 				flex={1}
 			>
-				<Text align="center" weight="semiBold" size={18} color="black">
+				<Text
+					align="center"
+					weight="semiBold"
+					size={18}
+					color={theme.colors.black}
+				>
 					Create your account
 				</Text>
 
@@ -90,14 +104,18 @@ const SignUp: React.FC = () => {
 					<Checkbox
 						value={checked}
 						onValueChange={setChecked}
-						color={checked ? "#770FDF" : "#E6E6E6"}
+						color={
+							checked
+								? theme.colors.primary
+								: theme.colors.grey300
+						}
 					/>
 					<Text
 						style={{ flex: 1 }}
 						marginLeft={10}
 						weight="regular"
 						size={12}
-						color="#A0A0A0"
+						color={theme.colors.grey700}
 					>
 						I am over 18 years of age and I have read and agree to
 						the{" "}
@@ -112,23 +130,16 @@ const SignUp: React.FC = () => {
 				</Box>
 
 				<Box marginTop={37}>
-					<TouchableOpacity
-						onPress={() => navigation.navigate("SignUp")}
-						style={{
-							backgroundColor: "#770FDF",
-							paddingVertical: 16,
-							borderRadius: 4,
-						}}
-					>
-						<Text weight="medium" color="white" align="center">
-							Create account
-						</Text>
-					</TouchableOpacity>
+					<Button
+						color={theme.colors.primary}
+						onPress={() => {}}
+						text="Create an account"
+					/>
 
 					<Text
 						marginTop={13}
 						weight="regular"
-						color="#A0A0A0"
+						color={theme.colors.grey700}
 						align="center"
 						size={12}
 					>
@@ -146,7 +157,7 @@ const SignUp: React.FC = () => {
 					</Text>
 				</Box>
 			</Box>
-		</SafeAreaView>
+		</>
 	);
 };
 

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-	TextInput,
-	TextInputProps,
-	Touchable,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { TextInput, TextInputProps, TouchableOpacity } from "react-native";
 import Text from "../../components/Text";
 import Feather from "@expo/vector-icons/Feather";
 
