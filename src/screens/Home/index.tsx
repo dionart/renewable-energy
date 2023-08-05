@@ -7,7 +7,8 @@ import { FlatList, ScrollView, TouchableOpacity } from "react-native";
 import FundCard, { FundType } from "../../components/FundCard";
 import BusinessLogic from "../../assets/svgs/BusinessLogic";
 import CoinSvg from "../../assets/svgs/CoinSvg";
-interface MockedFundsType {
+import { useNavigation } from "@react-navigation/native";
+export interface MockedFundsType {
 	trending: GrowthRowType;
 	type: FundType;
 	value: string;
@@ -54,7 +55,7 @@ const mockedFunds: MockedFundsType[] = [
 		chartData: dataSet2,
 	},
 	{
-		trending: "up",
+		trending: "down",
 		type: "nature",
 		value: "1,457.23",
 		growth: "2.3",
@@ -64,9 +65,11 @@ const mockedFunds: MockedFundsType[] = [
 
 const Home: React.FC = () => {
 	const theme = useTheme() as Theme;
+	const navigation = useNavigation();
 
 	const renderItem = ({ item }: { item: MockedFundsType }) => (
 		<FundCard
+			onPress={() => navigation.navigate("FundDetails", { fund: item })}
 			type={item.type}
 			value={item.value}
 			growth={item.growth}

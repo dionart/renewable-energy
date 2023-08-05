@@ -10,6 +10,7 @@ export interface Theme extends DefaultTheme {
 		white: string;
 		grey100: string;
 		grey300: string;
+		grey500: string;
 		grey700: string;
 	};
 }
@@ -24,6 +25,7 @@ const theme: Theme = {
 		white: "#FFFFFF",
 		grey100: "#F4F4F4",
 		grey300: "#E6E6E6",
+		grey500: "#CFCFCF",
 		grey700: "#A0A0A0",
 	},
 };

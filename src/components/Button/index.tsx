@@ -18,6 +18,10 @@ interface Props {
 	icon?: keyof typeof Feather.glyphMap;
 	leftComponent?: React.ReactNode;
 	iconColor?: string;
+	borderColor?: string;
+	borderWidth?: number;
+	width?: number | string;
+	flex?: number;
 }
 
 const Button: React.FC<Props> = ({
@@ -32,11 +36,19 @@ const Button: React.FC<Props> = ({
 	iconColor,
 	textWeight = "medium",
 	leftComponent,
+	borderColor,
+	borderWidth,
+	width,
+	flex,
 }) => {
 	const theme = useTheme() as Theme;
 
 	return (
 		<TouchableOpacity
+			flex={flex}
+			borderColor={borderColor}
+			borderWidth={borderWidth}
+			width={width}
 			paddingVertical={paddingVertical}
 			paddingHorizontal={paddingHorizontal}
 			color={color}

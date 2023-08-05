@@ -10,6 +10,7 @@ import { Icon } from "../../components";
 import FundDetails from "../../screens/FundDetails";
 
 const Tab = createBottomTabNavigator<PostAuthNavigatorParamList>();
+const Stack = createNativeStackNavigator();
 
 const PostAuthNavigator: React.FC = () => {
 	const theme = useTheme() as Theme;
@@ -25,7 +26,7 @@ const PostAuthNavigator: React.FC = () => {
 			>
 				<Tab.Screen
 					name="Home"
-					component={Home}
+					component={HomeNavigator}
 					options={{
 						tabBarLabel: "Home",
 						tabBarIcon: ({ focused, size }) => {
@@ -84,6 +85,23 @@ const PostAuthNavigator: React.FC = () => {
 					}}
 				/>
 			</Tab.Navigator>
+		</SafeAreaView>
+	);
+};
+
+const HomeNavigator: React.FC = () => {
+	const theme = useTheme() as Theme;
+
+	return (
+		<SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.white }}>
+			<Stack.Navigator
+				screenOptions={{
+					headerShown: false,
+				}}
+			>
+				<Stack.Screen name="Home" component={Home} />
+				<Stack.Screen name="FundDetails" component={FundDetails} />
+			</Stack.Navigator>
 		</SafeAreaView>
 	);
 };
