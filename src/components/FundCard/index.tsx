@@ -113,10 +113,7 @@ const FundCard: React.FC<Props> = ({
 					<Text marginRight={5} size={14} weight="regular">
 						${value}
 					</Text>
-					<GrowthRow
-						type={isChartUp ? "up" : "down"}
-						value={growth}
-					/>
+					<GrowthRow isChartGrowing={isChartUp} value={growth} />
 				</Box>
 			</Box>
 		</TouchableOpacity>

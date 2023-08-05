@@ -1,18 +1,7 @@
 import React, { useState } from "react";
-import {
-	FlatList,
-	ScrollView,
-	TouchableOpacity,
-	View,
-	Image,
-} from "react-native";
+import { FlatList, ScrollView, TouchableOpacity } from "react-native";
 import { Box, Button, Header, Icon, Text } from "../../components";
-import {
-	Route,
-	RouteProp,
-	useNavigation,
-	useRoute,
-} from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
 import GrowthRow from "../../components/GrowthRow";
@@ -32,20 +21,6 @@ for (let i = 0; i < 3; i++) {
 	const imageUrl = `https://picsum.photos/id/${i}/500/300`;
 	pictureList.push(imageUrl);
 }
-
-const mockedFund = {
-	trending: "up",
-	type: "nature",
-	value: "1,457.23",
-	growth: "2.3",
-	chartData: [
-		{ x: 1, y: 5 },
-		{ x: 2, y: 2 },
-		{ x: 3, y: 3 },
-		{ x: 4, y: 5 },
-		{ x: 5, y: 4 },
-	],
-};
 
 const infos = [
 	{
@@ -129,7 +104,7 @@ const FundDetails: React.FC = () => {
 							weight="regular"
 							align="center"
 						>
-							WFND
+							{fund.type.charAt(0).toUpperCase()}FND
 						</Text>
 					</Box>
 				}
@@ -145,7 +120,21 @@ const FundDetails: React.FC = () => {
 						<Text size={24} weight="semiBold">
 							{fund.value}
 						</Text>
-						<GrowthRow type={fund.trending} value={fund.growth} />
+						<GrowthRow
+							isChartGrowing={isChartUp}
+							value={fund.growth}
+						/>
+						<Text
+							size={14}
+							weight="regular"
+							color={theme.colors.grey700}
+						>
+							$
+							{(
+								(parseFloat(fund.growth) / 100) *
+								parseFloat(fund.value.replace(",", ""))
+							).toFixed(2)}
+						</Text>
 					</Box>
 					<Text size={24} weight="semiBold">
 						2022
@@ -298,7 +287,7 @@ const FundDetails: React.FC = () => {
 						<Text size={24} weight="semiBold">
 							18 credits
 						</Text>
-						<GrowthRow type="up" value="8.41" />
+						<GrowthRow isChartGrowing={isChartUp} value="8.41" />
 					</Box>
 
 					<Box alignItems="flex-end">

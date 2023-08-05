@@ -46,7 +46,7 @@ const PostAuthNavigator: React.FC = () => {
 				/>
 				<Tab.Screen
 					name="Trade"
-					component={FundDetails}
+					component={Home}
 					options={{
 						tabBarLabel: "Trade",
 						tabBarIcon: ({ focused, size }) => {

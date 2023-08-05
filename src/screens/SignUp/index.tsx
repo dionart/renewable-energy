@@ -1,24 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Checkbox from "expo-checkbox";
 import Icon from "../../components/Icon";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
-import { NavigationProp } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AuthNavigatorParamList } from "../../navigators/AuthNavigator/types";
 import { Box, Button, Header, Input, Text } from "../../components";
 
-const SignUp: React.FC = () => {
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [showPassword, setShowPassword] = useState(false);
-	const [checked, setChecked] = useState(false);
-	const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
-	const theme = useTheme() as Theme;
+interface FormValues {
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	checked: boolean;
+}
 
+const SignUp: React.FC = () => {
+	const theme = useTheme() as Theme;
+	const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<FormValues>();
+
+	const onSubmit: SubmitHandler<FormValues> = (data) => {
+		console.log(data);
+	};
 	return (
 		<>
 			<Header
@@ -34,8 +44,9 @@ const SignUp: React.FC = () => {
 						gap={5}
 						flexDirection="row"
 					>
-						{Array.from({ length: 3 }).map((_) => (
+						{Array.from({ length: 3 }).map((_, index) => (
 							<Box
+								key={index}
 								backgroundColor={theme.colors.grey100}
 								width={50}
 								height={5}
@@ -62,50 +73,137 @@ const SignUp: React.FC = () => {
 				</Text>
 
 				<Box marginTop={34}>
-					<Input
-						label="First Name"
-						onChangeText={setFirstName}
-						value={firstName}
-						placeholder="First Name"
+					<Controller
+						control={control}
+						render={({ field }) => (
+							<Input
+								label="First Name"
+								onChangeText={field.onChange}
+								value={field.value}
+								placeholder="First Name"
+							/>
+						)}
+						name="firstName"
+						rules={{
+							required: "First Name is required",
+						}}
+						defaultValue=""
 					/>
+					{errors.firstName && (
+						<Text color="red" size={12}>
+							{errors.firstName.message}
+						</Text>
+					)}
+
 					<Box marginTop={20}>
-						<Input
-							label="Last Name"
-							onChangeText={setLastName}
-							value={lastName}
-							placeholder="Last Name"
+						<Controller
+							control={control}
+							render={({ field }) => (
+								<Input
+									label="Last Name"
+									onChangeText={field.onChange}
+									value={field.value}
+									placeholder="Last Name"
+								/>
+							)}
+							name="lastName"
+							rules={{
+								required: "Last Name is required",
+							}}
+							defaultValue=""
 						/>
+						{errors.lastName && (
+							<Text color="red" size={12}>
+								{errors.lastName.message}
+							</Text>
+						)}
 					</Box>
+
 					<Box marginTop={20}>
-						<Input
-							label="Email"
-							onChangeText={setEmail}
-							value={email}
-							placeholder="Email"
+						<Controller
+							control={control}
+							render={({ field }) => (
+								<Input
+									label="Email"
+									onChangeText={field.onChange}
+									value={field.value}
+									placeholder="Email"
+								/>
+							)}
+							name="email"
+							rules={{
+								required: "Email is required",
+								pattern: {
+									value: /\S+@\S+\.\S+/,
+									message: "Invalid email address",
+								},
+							}}
+							defaultValue=""
 						/>
+						{errors.email && (
+							<Text color="red" size={12}>
+								{errors.email.message}
+							</Text>
+						)}
 					</Box>
+
 					<Box marginTop={20}>
-						<Input
-							label="Password"
-							onChangeText={setPassword}
-							value={password}
-							placeholder="Minimum 8 characters"
-							icon={showPassword ? "eye" : "eye-off"}
-							secureTextEntry={!showPassword}
-							onIconPress={() => setShowPassword(!showPassword)}
+						<Controller
+							control={control}
+							render={({ field }) => (
+								<Input
+									label="Password"
+									onChangeText={field.onChange}
+									value={field.value}
+									placeholder="Minimum 8 characters"
+									icon={field.value ? "eye" : "eye-off"}
+									secureTextEntry={!field.value}
+									onIconPress={() =>
+										field.onChange(!field.value)
+									}
+								/>
+							)}
+							name="password"
+							rules={{
+								required: "Password is required",
+								minLength: {
+									value: 8,
+									message:
+										"Password must be at least 8 characters",
+								},
+							}}
+							defaultValue=""
 						/>
+						{errors.password && (
+							<Text color="red" size={12}>
+								{errors.password.message}
+							</Text>
+						)}
 					</Box>
 				</Box>
 
 				<Box flexDirection="row" marginTop={16}>
-					<Checkbox
-						value={checked}
-						onValueChange={setChecked}
-						color={
-							checked
-								? theme.colors.primary
-								: theme.colors.grey300
-						}
+					<Controller
+						control={control}
+						render={({ field }) => (
+							<Checkbox
+								value={field.value}
+								onValueChange={field.onChange}
+								color={
+									field.value
+										? theme.colors.primary
+										: theme.colors.grey300
+								}
+							/>
+						)}
+						name="checked"
+						rules={{
+							validate: (value) =>
+								value === true
+									? undefined
+									: "You must agree to the Terms of Service and Privacy policy",
+						}}
+						defaultValue={false}
 					/>
 					<Text
 						style={{ flex: 1 }}
@@ -125,11 +223,16 @@ const SignUp: React.FC = () => {
 						</Text>
 					</Text>
 				</Box>
+				{errors.checked && (
+					<Text color="red" size={12}>
+						{errors.checked.message}
+					</Text>
+				)}
 
 				<Box marginTop={37}>
 					<Button
 						color={theme.colors.primary}
-						onPress={() => {}}
+						onPress={handleSubmit(onSubmit)}
 						text="Create an account"
 					/>
 

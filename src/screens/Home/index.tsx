@@ -2,14 +2,14 @@ import React from "react";
 import { Box, Button, Header, Icon, Text } from "../../components";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
-import GrowthRow, { GrowthRowType } from "../../components/GrowthRow";
+import GrowthRow from "../../components/GrowthRow";
 import { FlatList, ScrollView, TouchableOpacity } from "react-native";
 import FundCard, { FundType } from "../../components/FundCard";
 import BusinessLogic from "../../assets/svgs/BusinessLogic";
 import CoinSvg from "../../assets/svgs/CoinSvg";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { HomeNavigatorParamList } from "../../navigators/PostAuthNavigator/types";
 export interface MockedFundsType {
-	trending: GrowthRowType;
 	type: FundType;
 	value: string;
 	growth: string;
@@ -41,21 +41,18 @@ const dataSet3 = [
 ];
 const mockedFunds: MockedFundsType[] = [
 	{
-		trending: "up",
 		type: "wind",
 		value: "1,457.23",
 		growth: "2.3",
 		chartData: dataSet1,
 	},
 	{
-		trending: "down",
 		type: "solar",
 		value: "1,457.23",
 		growth: "2.3",
 		chartData: dataSet2,
 	},
 	{
-		trending: "down",
 		type: "nature",
 		value: "1,457.23",
 		growth: "2.3",
@@ -65,7 +62,7 @@ const mockedFunds: MockedFundsType[] = [
 
 const Home: React.FC = () => {
 	const theme = useTheme() as Theme;
-	const navigation = useNavigation();
+	const navigation = useNavigation<NavigationProp<HomeNavigatorParamList>>();
 
 	const renderItem = ({ item }: { item: MockedFundsType }) => (
 		<FundCard
@@ -111,7 +108,7 @@ const Home: React.FC = () => {
 						<Text size={24} weight="semiBold">
 							$1,245.23
 						</Text>
-						<GrowthRow type="up" value="31.82" />
+						<GrowthRow isChartGrowing={true} value="31.82" />
 					</Box>
 					<Button
 						onPress={() => {}}

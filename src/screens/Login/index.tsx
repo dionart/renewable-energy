@@ -3,24 +3,25 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
 import { useAppDispatch } from "../../store";
-import { login, logout } from "../../store/authSlice";
+import { login } from "../../store/authSlice";
 import { AuthNavigatorParamList } from "../../navigators/AuthNavigator/types";
 import { Button, Header, Input, Box, Text } from "../../components";
+import { useForm, Controller } from "react-hook-form";
 
 const Login: React.FC = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
 	const theme = useTheme() as Theme;
 	const dispatch = useAppDispatch();
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+		setValue,
+	} = useForm();
 
-	const handleLogin = () => {
-		dispatch(login({ id: 1, email: email }));
-	};
-
-	const handleLogout = () => {
-		dispatch(logout());
+	const handleLogin = (data: any) => {
+		dispatch(login({ id: 1, email: data.email }));
 	};
 
 	const handleNavigate = () => {
@@ -48,27 +49,72 @@ const Login: React.FC = () => {
 				</Text>
 
 				<Box marginTop={34}>
-					<Input
-						label="E-mail"
-						onChangeText={setEmail}
-						value={email}
-						placeholder="Email"
+					<Controller
+						control={control}
+						render={({ field }) => (
+							<Input
+								label="E-mail"
+								onChangeText={(value) =>
+									setValue("email", value)
+								}
+								value={field.value}
+								placeholder="Email"
+							/>
+						)}
+						name="email"
+						rules={{
+							required: "Email is required",
+							pattern: {
+								value: /\S+@\S+\.\S+/,
+								message: "Invalid email address",
+							},
+						}}
+						defaultValue=""
 					/>
+					{errors.email && (
+						<Text color="red" size={12}>
+							{errors.email.message as string}
+						</Text>
+					)}
 					<Box marginTop={20}>
-						<Input
-							label="Password"
-							onChangeText={setPassword}
-							value={password}
-							placeholder="Minimum 8 characters"
-							icon={showPassword ? "eye" : "eye-off"}
-							secureTextEntry={!showPassword}
-							onIconPress={() => setShowPassword(!showPassword)}
+						<Controller
+							control={control}
+							render={({ field }) => (
+								<Input
+									label="Password"
+									onChangeText={(value) =>
+										setValue("password", value)
+									}
+									value={field.value}
+									placeholder="Minimum 8 characters"
+									icon={showPassword ? "eye" : "eye-off"}
+									secureTextEntry={!showPassword}
+									onIconPress={() =>
+										setShowPassword(!showPassword)
+									}
+								/>
+							)}
+							name="password"
+							rules={{
+								required: "Password is required",
+								minLength: {
+									value: 8,
+									message:
+										"Password must be at least 8 characters",
+								},
+							}}
+							defaultValue=""
 						/>
+						{errors.password && (
+							<Text color="red" size={12}>
+								{errors.password.message as string}
+							</Text>
+						)}
 					</Box>
 				</Box>
 
 				<Box marginTop={37}>
-					<Button onPress={handleLogin} text="Login" />
+					<Button onPress={handleSubmit(handleLogin)} text="Login" />
 
 					<Text
 						marginTop={13}
