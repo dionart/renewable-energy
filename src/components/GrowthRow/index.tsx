@@ -6,8 +6,9 @@ import Text from "../Text";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
 
+export type GrowthRowType = "up" | "down";
 interface Props {
-	type: "up" | "down";
+	type: GrowthRowType;
 	value: string;
 }
 

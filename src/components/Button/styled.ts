@@ -11,5 +11,5 @@ export const TouchableOpacity = styled.TouchableOpacity<TouchableOpacityProps>`
 	padding-vertical: ${({ paddingVertical }) => paddingVertical ?? 16}px;
 	padding-horizontal: ${({ paddingHorizontal }) => paddingHorizontal ?? 16}px;
 	border-radius: 4px;
-	flex-direction: row;
+	align-items: center;
 `;

@@ -5,6 +5,7 @@ import { Theme } from "../../theme";
 import { useTheme } from "styled-components";
 import Icon from "../Icon";
 import Feather from "@expo/vector-icons/Feather";
+import Box from "../Box";
 interface Props {
 	onPress: () => void;
 	text: string;
@@ -15,6 +16,7 @@ interface Props {
 	paddingVertical?: number;
 	paddingHorizontal?: number;
 	icon?: keyof typeof Feather.glyphMap;
+	leftComponent?: React.ReactNode;
 	iconColor?: string;
 }
 
@@ -29,6 +31,7 @@ const Button: React.FC<Props> = ({
 	icon,
 	iconColor,
 	textWeight = "medium",
+	leftComponent,
 }) => {
 	const theme = useTheme() as Theme;
 
@@ -39,22 +42,25 @@ const Button: React.FC<Props> = ({
 			color={color}
 			onPress={onPress}
 		>
-			{icon && (
-				<Icon
-					icon={icon}
-					size={14}
-					color={iconColor ?? theme.colors.black}
-				/>
-			)}
-			<Text
-				marginLeft={icon ? 4 : 0}
-				size={textSize ?? 16}
-				weight={textWeight}
-				color={textColor ?? theme.colors.white}
-				align="center"
-			>
-				{text}
-			</Text>
+			<Box flexDirection="row">
+				{leftComponent && leftComponent}
+				{icon && (
+					<Icon
+						icon={icon}
+						size={14}
+						color={iconColor ?? theme.colors.black}
+					/>
+				)}
+				<Text
+					marginLeft={icon || leftComponent ? 4 : 0}
+					size={textSize ?? 16}
+					weight={textWeight}
+					color={textColor ?? theme.colors.white}
+					align="center"
+				>
+					{text}
+				</Text>
+			</Box>
 		</TouchableOpacity>
 	);
 };

@@ -24,7 +24,6 @@ const Login: React.FC = () => {
 	};
 
 	const handleNavigate = () => {
-		handleLogin();
 		navigation.navigate("SignUp");
 	};
 
@@ -69,7 +68,7 @@ const Login: React.FC = () => {
 				</Box>
 
 				<Box marginTop={37}>
-					<Button onPress={handleNavigate} text="Login" />
+					<Button onPress={handleLogin} text="Login" />
 
 					<Text
 						marginTop={13}

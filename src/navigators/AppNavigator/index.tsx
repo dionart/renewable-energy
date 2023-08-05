@@ -5,9 +5,11 @@ import { useSelector } from "react-redux";
 import PostAuthNavigator from "../PostAuthNavigator";
 
 const AppNavigator: React.FC = () => {
-	const user = useSelector((state: RootState) => state.auth.user);
+	const isAuthenticated = useSelector(
+		(state: RootState) => state.auth.isAuthenticated
+	);
 
-	return user ? <PostAuthNavigator /> : <AuthNavigator />;
+	return isAuthenticated ? <PostAuthNavigator /> : <AuthNavigator />;
 };
 
 export default AppNavigator;
