@@ -5,12 +5,13 @@ import { Theme } from "../../theme";
 import GrowthRow from "../../components/GrowthRow";
 import { FlatList, ScrollView, TouchableOpacity } from "react-native";
 import FundCard, { FundType } from "../../components/FundCard";
-import BusinessLogic from "../../assets/svgs/BusinessLogic";
+import BusinessLogicSvg from "../../assets/svgs/BusinessLogicSvg";
 import CoinSvg from "../../assets/svgs/CoinSvg";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { HomeNavigatorParamList } from "../../navigators/PostAuthNavigator/types";
 import { mockedFunds } from "./mock";
+import { HomeNavigatorParamList } from "../../navigators/HomeNavigator/types";
 export interface MockedFundsType {
+	id: number;
 	type: FundType;
 	value: string;
 	growth: string;
@@ -35,26 +36,34 @@ const Home: React.FC = () => {
 		<ScrollView style={{ flex: 1, backgroundColor: theme.colors.white }}>
 			<Header
 				leftComponent={
-					<Box
-						alignItems="center"
-						justifyContent="center"
-						borderRadius={16}
-						backgroundColor={theme.colors.grey100}
-						width={32}
-						height={32}
-					>
-						<Icon size={24} icon="user" />
-					</Box>
+					<TouchableOpacity>
+						<Box
+							alignItems="center"
+							justifyContent="center"
+							borderRadius={16}
+							backgroundColor={theme.colors.grey100}
+							width={32}
+							height={32}
+						>
+							<Icon size={24} icon="user" />
+						</Box>
+					</TouchableOpacity>
 				}
 				centerComponent={
 					<Box flexDirection="row">
 						<Text size={14} weight="semiBold">
 							Account: $1,457.23
 						</Text>
-						<Icon icon="chevron-down" />
+						<TouchableOpacity>
+							<Icon icon="chevron-down" />
+						</TouchableOpacity>
 					</Box>
 				}
-				rightComponent={<Icon size={24} icon="bell" />}
+				rightComponent={
+					<TouchableOpacity>
+						<Icon size={24} icon="bell" />
+					</TouchableOpacity>
+				}
 			/>
 			<Box marginTop={16} paddingHorizontal={20}>
 				<Text size={12} weight="regular">
@@ -98,6 +107,7 @@ const Home: React.FC = () => {
 					horizontal
 					data={mockedFunds}
 					renderItem={renderItem}
+					keyExtractor={(item) => item.id.toString()}
 				/>
 
 				<TouchableOpacity>
@@ -125,14 +135,15 @@ const Home: React.FC = () => {
 							</Text>
 						</Box>
 						<Box width={90} height={84}>
-							<BusinessLogic />
+							<BusinessLogicSvg />
 						</Box>
 					</Box>
 				</TouchableOpacity>
 
 				<Box flexDirection="row" gap={17}>
-					{Array.from({ length: 2 }).map((_) => (
+					{Array.from({ length: 2 }).map((_, index) => (
 						<Box
+							key={index}
 							flex={1}
 							height={200}
 							marginTop={20}

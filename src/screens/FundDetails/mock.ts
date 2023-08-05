@@ -34,12 +34,14 @@ export const infos = [
 
 export const mockFundBreakdown = [
 	{
+		id: 1,
 		image: pictureList[0],
 		title: "AspiraDAC",
 		description:
 			"Aspira is building a modular, direct air capture system with the energy supply integrated into the modules",
 	},
 	{
+		id: 2,
 		image: pictureList[1],
 		title: "climeworks",
 		description:

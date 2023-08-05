@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
 
-const BusinessLogic = () => (
+const BusinessLogicSvg = () => (
 	<Svg fill="none">
 		<G clipPath="url(#a)">
 			<Path
@@ -282,4 +282,4 @@ const BusinessLogic = () => (
 		</Defs>
 	</Svg>
 );
-export default BusinessLogic;
+export default BusinessLogicSvg;

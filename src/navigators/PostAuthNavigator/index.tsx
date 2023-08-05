@@ -8,9 +8,10 @@ import { PostAuthNavigatorParamList } from "./types";
 import Home from "../../screens/Home";
 import { Icon } from "../../components";
 import FundDetails from "../../screens/FundDetails";
+import TradeSvg from "../../assets/svgs/TradeSvg";
+import HomeNavigator from "../HomeNavigator";
 
 const Tab = createBottomTabNavigator<PostAuthNavigatorParamList>();
-const Stack = createNativeStackNavigator();
 
 const PostAuthNavigator: React.FC = () => {
 	const theme = useTheme() as Theme;
@@ -25,15 +26,15 @@ const PostAuthNavigator: React.FC = () => {
 				})}
 			>
 				<Tab.Screen
-					name="Home"
+					name="HomeNavigator"
 					component={HomeNavigator}
 					options={{
 						tabBarLabel: "Home",
-						tabBarIcon: ({ focused, size }) => {
+						tabBarIcon: ({ focused }) => {
 							return (
 								<Icon
 									icon="home"
-									size={size}
+									size={19}
 									color={
 										focused
 											? theme.colors.primary
@@ -49,11 +50,9 @@ const PostAuthNavigator: React.FC = () => {
 					component={Home}
 					options={{
 						tabBarLabel: "Trade",
-						tabBarIcon: ({ focused, size }) => {
+						tabBarIcon: ({ focused }) => {
 							return (
-								<Icon
-									icon="home"
-									size={size}
+								<TradeSvg
 									color={
 										focused
 											? theme.colors.primary
@@ -69,11 +68,11 @@ const PostAuthNavigator: React.FC = () => {
 					component={Home}
 					options={{
 						tabBarLabel: "Portfolio",
-						tabBarIcon: ({ focused, color, size }) => {
+						tabBarIcon: ({ focused }) => {
 							return (
 								<Icon
 									icon="pie-chart"
-									size={size}
+									size={19}
 									color={
 										focused
 											? theme.colors.primary
@@ -85,23 +84,6 @@ const PostAuthNavigator: React.FC = () => {
 					}}
 				/>
 			</Tab.Navigator>
-		</SafeAreaView>
-	);
-};
-
-const HomeNavigator: React.FC = () => {
-	const theme = useTheme() as Theme;
-
-	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.white }}>
-			<Stack.Navigator
-				screenOptions={{
-					headerShown: false,
-				}}
-			>
-				<Stack.Screen name="Home" component={Home} />
-				<Stack.Screen name="FundDetails" component={FundDetails} />
-			</Stack.Navigator>
 		</SafeAreaView>
 	);
 };

@@ -8,9 +8,9 @@ import GrowthRow from "../../components/GrowthRow";
 import { VictoryChart, VictoryLine, VictoryAxis } from "victory-native";
 import InfoBlock from "../../components/InfoBlock";
 import FundBreakdownCard from "../../components/FundBreakdownCard";
-import { HomeNavigatorParamList } from "../../navigators/PostAuthNavigator/types";
 import { isChartUp } from "../../utils";
 import { filters, infos, mockFundBreakdown, tabs } from "./mock";
+import { HomeNavigatorParamList } from "../../navigators/HomeNavigator/types";
 
 const FundDetails: React.FC = () => {
 	const [activeFilter, setActiveFilter] = useState("1d");
@@ -170,11 +170,12 @@ const FundDetails: React.FC = () => {
 				</Text>
 
 				<Box marginBottom={18} flexDirection="row" gap={20}>
-					{tabs.map((item) => {
+					{tabs.map((item, index) => {
 						const isActive = activeTab === item;
 
 						return (
 							<TouchableOpacity
+								key={index.toString()}
 								onPress={() => setActiveTab(item)}
 							>
 								<Box
@@ -214,6 +215,7 @@ const FundDetails: React.FC = () => {
 							title={item.title}
 						/>
 					)}
+					keyExtractor={(item) => item.id.toString()}
 				/>
 				<Box
 					marginTop={40}

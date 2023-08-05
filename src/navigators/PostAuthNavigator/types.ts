@@ -1,12 +1,5 @@
-import { MockedFundsType } from "../../screens/Home";
-
 export type PostAuthNavigatorParamList = {
-	Home: undefined;
+	HomeNavigator: undefined;
 	Trade: undefined;
 	Portfolio: undefined;
-};
-
-export type HomeNavigatorParamList = {
-	Home: undefined;
-	FundDetails: { fund: MockedFundsType };
 };

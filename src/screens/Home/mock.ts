@@ -41,18 +41,21 @@ const dataSet3 = [
 
 export const mockedFunds: MockedFundsType[] = [
 	{
+		id: 1,
 		type: "wind",
 		value: "1,457.23",
 		growth: "2.3",
 		chartData: dataSet1,
 	},
 	{
+		id: 2,
 		type: "solar",
 		value: "1,457.23",
 		growth: "2.3",
 		chartData: dataSet2,
 	},
 	{
+		id: 3,
 		type: "nature",
 		value: "1,457.23",
 		growth: "2.3",
