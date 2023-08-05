@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FlatList, ScrollView, TouchableOpacity } from "react-native";
 import { Box, Button, Header, Icon, Text } from "../../components";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -14,6 +14,7 @@ import {
 import InfoBlock from "../../components/InfoBlock";
 import FundBreakdownCard from "../../components/FundBreakdownCard";
 import { HomeNavigatorParamList } from "../../navigators/PostAuthNavigator/types";
+import { isChartUp } from "../../utils";
 
 let pictureList = [];
 
@@ -77,9 +78,14 @@ const FundDetails: React.FC = () => {
 		useRoute<RouteProp<HomeNavigatorParamList, "FundDetails">>();
 	const fund = params?.fund;
 
-	const isChartUp =
-		fund.chartData.length > 1 &&
-		fund.chartData[fund.chartData.length - 1].y > fund.chartData[0].y;
+	const isChartGrowing = isChartUp(fund.chartData);
+
+	const percentageTotal = useMemo(() => {
+		return (
+			(parseFloat(fund.growth) / 100) *
+			parseFloat(fund.value.replace(",", ""))
+		).toFixed(2);
+	}, [fund]);
 
 	return (
 		<ScrollView style={{ flex: 1, backgroundColor: theme.colors.white }}>
@@ -120,21 +126,24 @@ const FundDetails: React.FC = () => {
 						<Text size={24} weight="semiBold">
 							{fund.value}
 						</Text>
-						<GrowthRow
-							isChartGrowing={isChartUp}
-							value={fund.growth}
-						/>
-						<Text
-							size={14}
-							weight="regular"
-							color={theme.colors.grey700}
-						>
-							$
-							{(
-								(parseFloat(fund.growth) / 100) *
-								parseFloat(fund.value.replace(",", ""))
-							).toFixed(2)}
-						</Text>
+						<Box flexDirection="row">
+							<GrowthRow
+								isChartGrowing={isChartGrowing}
+								value={fund.growth}
+							/>
+							<Text
+								marginLeft={4}
+								size={14}
+								weight="regular"
+								color={
+									isChartGrowing
+										? theme.colors.green
+										: theme.colors.red
+								}
+							>
+								($ {percentageTotal})
+							</Text>
+						</Box>
 					</Box>
 					<Text size={24} weight="semiBold">
 						2022
@@ -159,7 +168,7 @@ const FundDetails: React.FC = () => {
 							data={fund.chartData}
 							style={{
 								data: {
-									stroke: isChartUp
+									stroke: isChartGrowing
 										? theme.colors.green
 										: theme.colors.red,
 									strokeWidth: 2,
@@ -287,7 +296,10 @@ const FundDetails: React.FC = () => {
 						<Text size={24} weight="semiBold">
 							18 credits
 						</Text>
-						<GrowthRow isChartGrowing={isChartUp} value="8.41" />
+						<GrowthRow
+							isChartGrowing={isChartGrowing}
+							value="8.41"
+						/>
 					</Box>
 
 					<Box alignItems="flex-end">

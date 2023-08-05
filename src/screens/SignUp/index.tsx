@@ -28,6 +28,7 @@ const SignUp: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormValues> = (data) => {
 		console.log(data);
+		navigation.goBack();
 	};
 	return (
 		<>

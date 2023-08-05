@@ -5,16 +5,10 @@ import { Theme } from "../../theme";
 import Box from "../Box";
 import Icon from "../Icon";
 import Text from "../Text";
-import GrowthRow, { GrowthRowType } from "../GrowthRow";
+import GrowthRow from "../GrowthRow";
 import Feather from "@expo/vector-icons/Feather";
-import {
-	VictoryBar,
-	VictoryChart,
-	VictoryTheme,
-	VictoryLine,
-	VictoryLabel,
-	VictoryAxis,
-} from "victory-native";
+import { VictoryChart, VictoryLine, VictoryAxis } from "victory-native";
+import { isChartUp } from "../../utils";
 
 export type FundType = "wind" | "solar" | "nature";
 
@@ -60,9 +54,7 @@ const FundCard: React.FC<Props> = ({
 	chartData,
 }) => {
 	const theme = useTheme() as Theme;
-	const isChartUp =
-		chartData.length > 1 &&
-		chartData[chartData.length - 1].y > chartData[0].y;
+	const isChartGrowing = isChartUp(chartData);
 
 	return (
 		<TouchableOpacity onPress={onPress}>
@@ -100,7 +92,7 @@ const FundCard: React.FC<Props> = ({
 							data={chartData}
 							style={{
 								data: {
-									stroke: isChartUp
+									stroke: isChartGrowing
 										? theme.colors.green
 										: theme.colors.red,
 								},
@@ -113,7 +105,7 @@ const FundCard: React.FC<Props> = ({
 					<Text marginRight={5} size={14} weight="regular">
 						${value}
 					</Text>
-					<GrowthRow isChartGrowing={isChartUp} value={growth} />
+					<GrowthRow isChartGrowing={isChartGrowing} value={growth} />
 				</Box>
 			</Box>
 		</TouchableOpacity>
