@@ -5,69 +5,12 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { Theme } from "../../theme";
 import GrowthRow from "../../components/GrowthRow";
-import {
-	VictoryChart,
-	VictoryLine,
-	VictoryAxis,
-	VictoryLabel,
-} from "victory-native";
+import { VictoryChart, VictoryLine, VictoryAxis } from "victory-native";
 import InfoBlock from "../../components/InfoBlock";
 import FundBreakdownCard from "../../components/FundBreakdownCard";
 import { HomeNavigatorParamList } from "../../navigators/PostAuthNavigator/types";
 import { isChartUp } from "../../utils";
-
-let pictureList = [];
-
-for (let i = 0; i < 3; i++) {
-	const imageUrl = `https://picsum.photos/id/${i}/500/300`;
-	pictureList.push(imageUrl);
-}
-
-const infos = [
-	{
-		title: "AUM",
-		value: "$430.88m",
-	},
-	{
-		title: "Issue Date",
-		value: "18/04/2022",
-	},
-	{
-		title: "Vintage Range",
-		value: "2019-2022",
-	},
-	{
-		title: "TER",
-		value: "0.15%",
-	},
-	{
-		title: "Price at Close",
-		value: "$17.68",
-	},
-	{
-		title: "Price at Open",
-		value: "$17.74",
-	},
-];
-
-const mockFundBreakdown = [
-	{
-		image: pictureList[0],
-		title: "AspiraDAC",
-		description:
-			"Aspira is building a modular, direct air capture system with the energy supply integrated into the modules",
-	},
-	{
-		image: pictureList[1],
-		title: "climeworks",
-		description:
-			"uses renewable geothermal energy and waste heat to capture CO₂ directly from the air.",
-	},
-];
-
-const tabs = ["Highlighted", "Value", "Vintage", "Registry"];
-
-const filters = ["1h", "1d", "1w", "1m", "1y", "All"];
+import { filters, infos, mockFundBreakdown, tabs } from "./mock";
 
 const FundDetails: React.FC = () => {
 	const [activeFilter, setActiveFilter] = useState("1d");
@@ -174,8 +117,6 @@ const FundDetails: React.FC = () => {
 									strokeWidth: 2,
 								},
 							}}
-							labels={({ datum }) => datum.y}
-							labelComponent={<VictoryLabel />}
 						/>
 					</VictoryChart>
 				</Box>

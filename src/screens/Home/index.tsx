@@ -9,56 +9,13 @@ import BusinessLogic from "../../assets/svgs/BusinessLogic";
 import CoinSvg from "../../assets/svgs/CoinSvg";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { HomeNavigatorParamList } from "../../navigators/PostAuthNavigator/types";
+import { mockedFunds } from "./mock";
 export interface MockedFundsType {
 	type: FundType;
 	value: string;
 	growth: string;
 	chartData: { x: number; y: number }[];
 }
-
-const dataSet1 = [
-	{ x: 1, y: 2 },
-	{ x: 2, y: 3 },
-	{ x: 3, y: 5 },
-	{ x: 4, y: 4 },
-	{ x: 5, y: 6 },
-];
-
-const dataSet2 = [
-	{ x: 1, y: 3 },
-	{ x: 2, y: 2 },
-	{ x: 3, y: 4 },
-	{ x: 4, y: 6 },
-	{ x: 5, y: 3 },
-];
-
-const dataSet3 = [
-	{ x: 1, y: 5 },
-	{ x: 2, y: 2 },
-	{ x: 3, y: 3 },
-	{ x: 4, y: 5 },
-	{ x: 5, y: 4 },
-];
-const mockedFunds: MockedFundsType[] = [
-	{
-		type: "wind",
-		value: "1,457.23",
-		growth: "2.3",
-		chartData: dataSet1,
-	},
-	{
-		type: "solar",
-		value: "1,457.23",
-		growth: "2.3",
-		chartData: dataSet2,
-	},
-	{
-		type: "nature",
-		value: "1,457.23",
-		growth: "2.3",
-		chartData: dataSet3,
-	},
-];
 
 const Home: React.FC = () => {
 	const theme = useTheme() as Theme;
