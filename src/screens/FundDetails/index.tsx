@@ -122,8 +122,11 @@ const FundDetails: React.FC = () => {
 				</Box>
 			</Box>
 			<Box marginTop={20} alignSelf="center" gap={25} flexDirection="row">
-				{filters.map((item) => (
-					<TouchableOpacity onPress={() => setActiveFilter(item)}>
+				{filters.map((item, index) => (
+					<TouchableOpacity
+						key={index}
+						onPress={() => setActiveFilter(item)}
+					>
 						<Box
 							borderRadius={4}
 							paddingVertical={8}
@@ -155,8 +158,12 @@ const FundDetails: React.FC = () => {
 					Info & Stats
 				</Text>
 				<Box flexWrap="wrap" flex={1} flexDirection="row">
-					{infos.map((item) => (
-						<InfoBlock title={item.title} value={item.value} />
+					{infos.map((item, index) => (
+						<InfoBlock
+							key={index}
+							title={item.title}
+							value={item.value}
+						/>
 					))}
 				</Box>
 
