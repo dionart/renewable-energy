@@ -82,9 +82,7 @@ const Login: React.FC = () => {
 							render={({ field }) => (
 								<Input
 									label="Password"
-									onChangeText={(value) =>
-										setValue("password", value)
-									}
+									onChangeText={field.onChange}
 									value={field.value}
 									placeholder="Minimum 8 characters"
 									icon={showPassword ? "eye" : "eye-off"}

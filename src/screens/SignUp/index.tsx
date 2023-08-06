@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Checkbox from "expo-checkbox";
@@ -8,6 +8,8 @@ import { Theme } from "../../theme";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AuthNavigatorParamList } from "../../navigators/AuthNavigator/types";
 import { Box, Button, Header, Input, Text } from "../../components";
+import { useAppDispatch } from "../../store";
+import { signUp } from "../../store/authSlice";
 
 interface FormValues {
 	firstName: string;
@@ -25,10 +27,19 @@ const SignUp: React.FC = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FormValues>();
+	const [showPassword, setShowPassword] = useState(false);
+	const dispatch = useAppDispatch();
 
 	const onSubmit: SubmitHandler<FormValues> = (data) => {
-		console.log(data);
-		navigation.goBack();
+		dispatch(
+			signUp({
+				id: 1,
+				email: data.email,
+				name: data.firstName,
+				lastName: data.lastName,
+			})
+		);
+		navigation.navigate("RegistrationSuccess");
 	};
 	return (
 		<>
@@ -157,10 +168,10 @@ const SignUp: React.FC = () => {
 									onChangeText={field.onChange}
 									value={field.value}
 									placeholder="Minimum 8 characters"
-									icon={field.value ? "eye" : "eye-off"}
-									secureTextEntry={!field.value}
+									icon={showPassword ? "eye" : "eye-off"}
+									secureTextEntry={!showPassword}
 									onIconPress={() =>
-										field.onChange(!field.value)
+										setShowPassword(!showPassword)
 									}
 								/>
 							)}

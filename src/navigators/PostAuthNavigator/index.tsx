@@ -7,7 +7,6 @@ import { useTheme } from "styled-components";
 import { PostAuthNavigatorParamList } from "./types";
 import Home from "../../screens/Home";
 import { Icon } from "../../components";
-import FundDetails from "../../screens/FundDetails";
 import TradeSvg from "../../assets/svgs/TradeSvg";
 import HomeNavigator from "../HomeNavigator";
 
