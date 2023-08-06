@@ -9,6 +9,7 @@ import Home from "../../screens/Home";
 import { Icon } from "../../components";
 import TradeSvg from "../../assets/svgs/TradeSvg";
 import HomeNavigator from "../HomeNavigator";
+import Blank from "../../screens/Blank";
 
 const Tab = createBottomTabNavigator<PostAuthNavigatorParamList>();
 
@@ -46,8 +47,9 @@ const PostAuthNavigator: React.FC = () => {
 				/>
 				<Tab.Screen
 					name="Trade"
-					component={Home}
+					component={Blank}
 					options={{
+						headerShown: true,
 						tabBarLabel: "Trade",
 						tabBarIcon: ({ focused }) => {
 							return (
@@ -64,8 +66,9 @@ const PostAuthNavigator: React.FC = () => {
 				/>
 				<Tab.Screen
 					name="Portfolio"
-					component={Home}
+					component={Blank}
 					options={{
+						headerShown: true,
 						tabBarLabel: "Portfolio",
 						tabBarIcon: ({ focused }) => {
 							return (
