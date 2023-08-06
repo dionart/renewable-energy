@@ -1,15 +1,13 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { SafeAreaView } from "react-native";
 import { Theme } from "../../theme";
 import { useTheme } from "styled-components";
 import { PostAuthNavigatorParamList } from "./types";
-import Home from "../../screens/Home";
 import { Icon } from "../../components";
 import TradeSvg from "../../assets/svgs/TradeSvg";
 import HomeNavigator from "../HomeNavigator";
 import Blank from "../../screens/Blank";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator<PostAuthNavigatorParamList>();
 

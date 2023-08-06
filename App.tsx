@@ -15,6 +15,7 @@ import { Provider } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import store, { RootState } from "./src/store";
 import AppNavigator from "./src/navigators/AppNavigator";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
 	const [fontsLoaded] = useFonts({
@@ -37,6 +38,7 @@ export default function App() {
 		<Provider store={store}>
 			<ThemeProvider theme={theme as Theme}>
 				<NavigationContainer>
+					<StatusBar />
 					<AppNavigator />
 				</NavigationContainer>
 			</ThemeProvider>
